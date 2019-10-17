@@ -55,22 +55,11 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/colorPicker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.670"
+        app:layout_constraintHorizontal_bias="0.654"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/square"
+        app:layout_constraintVertical_bias="0.324"
         app:srcCompat="@drawable/paint" />
-
-    <ImageButton
-        android:id="@+id/clearBucket"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/colorPicker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.985"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square"
-        app:srcCompat="@drawable/clear" />
 
     <ImageButton
         android:id="@+id/brush"
@@ -79,9 +68,10 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/colorPicker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/square"
+        app:layout_constraintVertical_bias="0.324"
         app:srcCompat="@drawable/brush" />
 
     <ImageButton
@@ -91,9 +81,23 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/colorPicker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
+        app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/square"
+        app:layout_constraintVertical_bias="0.324"
         app:srcCompat="@drawable/eraser" />
+
+    <ImageButton
+        android:id="@+id/clearBucket"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/colorPicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/square"
+        app:layout_constraintVertical_bias="0.324"
+        app:srcCompat="@drawable/clear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,8 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DoodleJump"></activity>
-        <activity android:name=".Snake" />
+        <activity android:name=".DoodleJump"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Snake"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Coloring"
             android:configChanges="orientation|keyboardHidden"
@@ -22,7 +26,9 @@
             android:name=".Maze"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".About" />
+        <activity android:name=".About"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Games"
             android:configChanges="orientation|keyboardHidden"

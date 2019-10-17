@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">RGB Game Console</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_games">Games</string>
+    <string name="connect">Connect</string>
+    <string name="no_connections">Connect to display first!</string>
+    <string name="paired_devices">Paired Devices</string>
+    <string name="device_address">device_address</string>
+    <string name="connected">Connected.</string>
+    <string name="maze">Maze</string>
+    <string name="coloring">Coloring</string>
+    <string name="snake">Snake</string>
+    <string name="doodle_jump">Doodle Jump</string>
+    <string name="about">About</string>
+    <string name="connection_fail">Connection Failed. Is it a SPP Bluetooth? Try again.</string>
+    <string name="Vitalli">Android/Arduino Developer\nVitalii Nikolaienko</string>
+    <string name="Iryna">Main Arduino Developer\nIryna Mamai</string>
+    <string name="Valerii">Practical part\nValerii Medvezhonkov</string>
+</resources>

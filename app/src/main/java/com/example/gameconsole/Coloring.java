@@ -43,6 +43,8 @@ public class Coloring extends AppCompatActivity {
         paintBucket = this.findViewById(R.id.paintBucket);
         clearBucket = this.findViewById(R.id.clearBucket);
 
+        setResult(RESULT_OK);
+
         for(int i = 0;i < 16;i++){
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));

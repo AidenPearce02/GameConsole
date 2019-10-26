@@ -18,6 +18,8 @@ public class Snake extends AppCompatActivity {
         ImageButton left = this.findViewById(R.id.arrow_left_snake);
         ImageButton right = this.findViewById(R.id.arrow_right_snake);
 
+        setResult(RESULT_OK);
+
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

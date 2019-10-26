@@ -16,6 +16,8 @@ public class DoodleJump extends AppCompatActivity {
         ImageButton left = this.findViewById(R.id.arrow_left_dj);
         ImageButton right = this.findViewById(R.id.arrow_right_dj);
 
+        setResult(RESULT_OK);
+
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

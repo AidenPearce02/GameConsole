@@ -6,19 +6,22 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".App">
-        <activity android:name=".DoodleJump"
+        android:theme="@style/AppTheme">
+        <activity android:name=".TypeOfMaze"></activity>
+        <activity
+            android:name=".DoodleJump"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Snake"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Snake"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Coloring"
             android:configChanges="orientation|keyboardHidden"
@@ -27,9 +30,10 @@
             android:name=".Maze"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".About"
+        <activity
+            android:name=".About"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Games"
             android:configChanges="orientation|keyboardHidden"

@@ -17,4 +17,7 @@
     <string name="Iryna">Main Arduino Developer\nIryna Mamai</string>
     <string name="Valerii">Practical part\nValerii Medvezhonkov</string>
     <string name="icons">Icons made by Freepic, Smashicons\nfrom www.flaticon.com</string>
+    <string name="type_of_maiz">Maze\'s mode</string>
+    <string name="with_light">Normal mode</string>
+    <string name="wo_light">Hard mode</string>
 </resources>

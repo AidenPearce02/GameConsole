@@ -31,7 +31,7 @@ public class Games extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 game("m");
-                startActivityForResult(new Intent(Games.this, Maze.class),150);
+                startActivityForResult(new Intent(Games.this, TypeOfMaze.class),150);
 
             }
         });

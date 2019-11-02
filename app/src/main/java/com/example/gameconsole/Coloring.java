@@ -3,9 +3,11 @@ package com.example.gameconsole;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -44,18 +46,23 @@ public class Coloring extends AppCompatActivity {
         clearBucket = this.findViewById(R.id.clearBucket);
 
         setResult(RESULT_OK);
-
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        final int width = size.x-70;
+        int curCellId = 0;
         for(int i = 0;i < 16;i++){
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-            for (int j = 0;j < 17;j++){
+            for (int j = 0;j < 16;j++){
                 TextView t = new TextView(this);
-                t.setWidth(41);
-                t.setHeight(41);
-                t.setId(i*17 + j);
+                t.setWidth(width/16);
+                t.setHeight(width/16);
+                t.setId(curCellId);
                 t.setBackground(getResources().getDrawable(R.drawable.cell_shape,null));
                 t.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                 tableRow.addView(t);
+                curCellId++;
             }
             table.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
         }
@@ -81,10 +88,9 @@ public class Coloring extends AppCompatActivity {
 
             void handlePopulate(){
                 int curCellId = 0;
-
                 for (int i = 0; i < 16; i++) {
-                    for (int j = 0; j < 17; j++) {
-                        TextView tv = findViewById(curCellId);
+                    for (int j = 0; j < 16; j++) {
+                        final TextView tv = findViewById(curCellId);
                         Rect rect = getRawCoordinatesRect(tv);
                         cells.put(tv, rect);
                         curCellId++;

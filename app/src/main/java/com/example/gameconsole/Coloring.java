@@ -1,7 +1,6 @@
 package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.bluetooth.BluetoothSocket;
 import android.graphics.Color;
@@ -17,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class Coloring extends AppCompatActivity {
 
     private BluetoothSocket btSocket;
     private TextView colorPicker;
-    private int lastColor;
+    private int lastColor=Color.BLACK;
 
     private boolean populatedCells;
     protected Map<View, Rect> cells = new HashMap<>();
@@ -48,7 +48,8 @@ public class Coloring extends AppCompatActivity {
         paintBucket = this.findViewById(R.id.paintBucket);
         clearBucket = this.findViewById(R.id.clearBucket);
         btSocket = ((App) getApplication()).getBtSocket();
-
+        GradientDrawable gradientDrawable = (GradientDrawable)colorPicker.getBackground();
+        gradientDrawable.setColor(Color.BLACK);
         setResult(RESULT_OK);
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -125,28 +126,31 @@ public class Coloring extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isPaint = true;
+                Toast.makeText(getApplicationContext(),"Paint mode",Toast.LENGTH_SHORT).show();
             }
         });
         eraser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isPaint = false;
+                Toast.makeText(getApplicationContext(),"Cleaning mode",Toast.LENGTH_SHORT).show();
             }
         });
         paintBucket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeColorAll(true);
+                Toast.makeText(getApplicationContext(),"Paint all",Toast.LENGTH_SHORT).show();
             }
         });
         clearBucket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeColorAll(false);
+                Toast.makeText(getApplicationContext(),"Clear all",Toast.LENGTH_SHORT).show();
             }
         });
 
-        lastColor = ContextCompat.getColor(Coloring.this,R.color.colorText);
         colorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,9 +167,9 @@ public class Coloring extends AppCompatActivity {
         int cell=view.getId();
         int y=15-cell/16,x=cell%16;
         int id;
-        if(y%2==0) id=y*16+x;
-        else id=y*16+15-x;
-        idCell+=id;
+        if(y%2==0) id=y*16+15-x;
+        else id=y*16+x;
+        idCell+=255-id;
         int color;
         if(isPaint) {
             gradientDrawable.setColor(lastColor);
@@ -175,14 +179,13 @@ public class Coloring extends AppCompatActivity {
             gradientDrawable.setColor(getResources().getColor(R.color.colorText, null));
             color=Color.BLACK;
         }
-        int r = (color>>16)&0xFF;
-        int g = (color>>8)&0xFF;
-        int b = (color)&0xFF;
-        String total="$"+idCell+" "+r+" "+g+" "+b+";";
+        String Hex=Integer.toHexString(color);
+        String total="$#"+Hex.substring(2)+" "+idCell+";";
         if (btSocket!=null)
         {
             try
             {
+                btSocket.getOutputStream().write("c".getBytes());
                 btSocket.getOutputStream().write(total.getBytes());
             }
             catch (IOException e)
@@ -206,14 +209,13 @@ public class Coloring extends AppCompatActivity {
 
         }
         int color=(bucket)?lastColor:Color.BLACK;
-        int r = (color>>16)&0xFF;
-        int g = (color>>8)&0xFF;
-        int b = (color)&0xFF;
-        String total="$"+'B'+" "+r+" "+g+" "+b+";";
+        String Hex=Integer.toHexString(color);
+        String total="$#"+Hex.substring(2)+";";
         if (btSocket!=null)
         {
             try
             {
+                btSocket.getOutputStream().write("B".getBytes());
                 btSocket.getOutputStream().write(total.getBytes());
             }
             catch (IOException e)

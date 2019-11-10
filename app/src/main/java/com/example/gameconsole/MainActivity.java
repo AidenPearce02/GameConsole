@@ -56,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
         effects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (btSocket!=null)
+                {
+                    try
+                    {
+                        btSocket.getOutputStream().write("e".getBytes());
+                    }
+                    catch (IOException e)
+                    {
+                        ((App)getApplication()).msg("Error");
+                    }
+                }
                 startActivityForResult(new Intent(MainActivity.this,Effects.class),150);
             }
         });

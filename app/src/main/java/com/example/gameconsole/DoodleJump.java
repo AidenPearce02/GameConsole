@@ -10,12 +10,11 @@ import android.widget.ImageButton;
 import java.io.IOException;
 
 public class DoodleJump extends AppCompatActivity {
-    BluetoothSocket btSocket;
+    private BluetoothSocket btSocket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doodle_jump);
-
         ImageButton left = this.findViewById(R.id.arrow_left_dj);
         ImageButton right = this.findViewById(R.id.arrow_right_dj);
         btSocket = ((App) getApplication()).getBtSocket();

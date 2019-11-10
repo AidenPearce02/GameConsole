@@ -2,9 +2,7 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,7 +10,7 @@ import android.widget.ImageButton;
 import java.io.IOException;
 
 public class Maze extends AppCompatActivity {
-    BluetoothSocket btSocket;
+    private BluetoothSocket btSocket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

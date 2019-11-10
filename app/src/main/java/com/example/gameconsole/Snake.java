@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import java.io.IOException;
 
 public class Snake extends AppCompatActivity {
-    BluetoothSocket btSocket;
+    private BluetoothSocket btSocket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimary"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center"
-    tools:context=".MainActivity">
+    tools:context=".Levels">
+
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/level"
         android:textColor="@color/colorText"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -27,12 +27,35 @@
         app:layout_constraintVertical_bias="0.04" />
 
     <Button
-        android:id="@+id/connect"
+        android:id="@+id/speed1"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/connect"
-        android:textColor="@color/colorPrimary"
+        android:text="@string/speed1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22" />
+
+    <Button
+        android:id="@+id/speed2"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/speed2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.30" />
+
+    <Button
+        android:id="@+id/speed3"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/speed3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,11 +63,11 @@
         app:layout_constraintVertical_bias="0.38" />
 
     <Button
-        android:id="@+id/games"
+        android:id="@+id/speed4"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/tab_games"
+        android:text="@string/speed4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,11 +75,11 @@
         app:layout_constraintVertical_bias="0.46" />
 
     <Button
-        android:id="@+id/effects"
+        android:id="@+id/speed5"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/effects"
+        android:text="@string/speed5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,15 +87,38 @@
         app:layout_constraintVertical_bias="0.54" />
 
     <Button
-        android:id="@+id/about"
+        android:id="@+id/speed6"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/about"
-        android:textColor="@color/colorPrimary"
+        android:text="@string/speed6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.62" />
+
+    <Button
+        android:id="@+id/speed7"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/speed7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <Button
+        android:id="@+id/speed8"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/speed8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.78" />
 </androidx.constraintlayout.widget.ConstraintLayout>

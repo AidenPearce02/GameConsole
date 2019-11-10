@@ -57,8 +57,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.654"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square"
-        app:layout_constraintVertical_bias="0.324"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        android:contentDescription="@string/paintBucket"
         app:srcCompat="@drawable/paint" />
 
     <ImageButton
@@ -70,8 +71,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square"
-        app:layout_constraintVertical_bias="0.324"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        android:contentDescription="@string/brush"
         app:srcCompat="@drawable/brush" />
 
     <ImageButton
@@ -83,8 +85,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square"
-        app:layout_constraintVertical_bias="0.324"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        android:contentDescription="@string/eraser"
         app:srcCompat="@drawable/eraser" />
 
     <ImageButton
@@ -96,8 +99,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/square"
-        app:layout_constraintVertical_bias="0.324"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        android:contentDescription="@string/clearBucket"
         app:srcCompat="@drawable/clear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

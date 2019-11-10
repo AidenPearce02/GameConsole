@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String address=null;
     private ProgressDialog progress;
-    BluetoothAdapter myBluetooth = null;
-    BluetoothSocket btSocket = null;
+    private BluetoothSocket btSocket = null;
     private boolean isBtConnected = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Button connect = this.findViewById(R.id.connect);
         Button games = this.findViewById(R.id.games);
         Button about = this.findViewById(R.id.about);
+        Button effects=this.findViewById(R.id.effects);
 
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, About.class));
             }
         });
-
+        effects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(MainActivity.this,Effects.class),150);
+            }
+        });
 
     }
 
@@ -63,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==200&&resultCode==RESULT_OK){
             address = data.getStringExtra(getResources().getString(R.string.device_address));
             new ConnectBT().execute();
+        }
+        if(requestCode==150){
+            if (btSocket!=null)
+            {
+                try
+                {
+                    btSocket.getOutputStream().write("b".getBytes());
+                }
+                catch (IOException e)
+                {
+                    ((App)getApplication()).msg("Error");
+                }
+            }
         }
     }
 
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 if (btSocket == null || !isBtConnected)
                 {
-                    myBluetooth = BluetoothAdapter.getDefaultAdapter();//get the mobile bluetooth device
+                    BluetoothAdapter myBluetooth = BluetoothAdapter.getDefaultAdapter();//get the mobile bluetooth device
                     BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);//connects to the device's address and checks if it's available
                     btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);//create a RFCOMM (SPP) connection
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();

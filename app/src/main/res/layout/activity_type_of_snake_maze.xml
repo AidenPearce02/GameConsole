@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimary"
-    tools:context=".Games">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TypeOfSnakeMaze">
+
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView14"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:text="@string/tab_games"
+        android:layout_height="wrap_content"
+        android:text="@string/maze_type"
         android:textColor="@color/colorText"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -23,14 +24,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.04"/>
 
     <Button
-        android:id="@+id/maze"
+        android:id="@+id/level0"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/maze"
+        android:text="@string/level0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <Button
+        android:id="@+id/level1"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/level1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,23 +51,36 @@
         app:layout_constraintVertical_bias="0.38" />
 
     <Button
-        android:id="@+id/coloring"
+        android:id="@+id/level2"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/coloring"
+        android:text="@string/level2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.46" />
 
     <Button
-        android:id="@+id/doodle_jump"
+        android:id="@+id/level3"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/doodle_jump"
+        android:text="@string/level3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.54" />
+
+    <Button
+        android:id="@+id/level4"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:text="@string/level4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,16 +88,14 @@
         app:layout_constraintVertical_bias="0.62" />
 
     <Button
-        android:id="@+id/snake"
+        android:id="@+id/level5"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:text="@string/snake"
+        android:text="@string/level5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54"
-        />
-
+        app:layout_constraintVertical_bias="0.70" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,9 +5,9 @@ import android.app.Application;
 
 public class App extends Application {
     private Activity mCurrentActivity = null;
-    private String speedNow;
-    private String mazeNow;
-    private Stopwatch stopwatch;
+    private String speedNow="";
+    private String mazeNow="";
+    private Stopwatch stopwatch=null;
 
     public Stopwatch getStopwatch() {
         return stopwatch;

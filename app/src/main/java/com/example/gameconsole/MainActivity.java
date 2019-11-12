@@ -6,8 +6,12 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -209,6 +213,16 @@ public class MainActivity extends AppCompatActivity {
             connectedOutputStream = out;
         }
 
+        private void changeMaze(){
+            findViewById(R.id.arrow_left).setVisibility(View.GONE);
+            findViewById(R.id.arrow_right).setVisibility(View.GONE);
+            findViewById(R.id.arrow_up).setVisibility(View.GONE);
+            findViewById(R.id.arrow_down).setVisibility(View.GONE);
+            TextView win_maze = findViewById(R.id.win_maze);
+            win_maze.setText(String.valueOf(stopwatch.getElapsedTimeSecs()));
+            win_maze.setVisibility(View.VISIBLE);
+        }
+
         @Override
         public void run() { // Приём данных
 
@@ -227,15 +241,27 @@ public class MainActivity extends AppCompatActivity {
                         if(((App)getApplicationContext()).getCurrentActivity()!=null) {
                             mApp = ((App) getApplicationContext()).getCurrentActivity();
                             if(message.charAt(0)=='m'){
-                                stopwatch =((App)getApplicationContext()).getStopwatch();
-                                if(stopwatch.isRunning()){
-                                    mApp.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(mApp, String.valueOf(stopwatch.getElapsedTimeSecs()), Toast.LENGTH_SHORT).show();
-                                            stopwatch.pause();
-                                        }
-                                    });
+                                if(((App)getApplicationContext()).getStopwatch()!=null){
+                                    stopwatch =((App)getApplicationContext()).getStopwatch();
+                                    if(stopwatch.isRunning()){
+                                        mApp.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if(mApp.getClass().getSimpleName().equals("Maze")) {
+                                                    changeMaze();
+                                                    Handler handler = new Handler();
+                                                    handler.postDelayed(new Runnable() {
+                                                        public void run() {
+                                                            mApp.finish();
+                                                        }
+                                                    }, 5000);
+                                                    //5 seconds
+                                                }
+                                                stopwatch.pause();
+                                                ((App)getApplicationContext()).setStopwatch(null);
+                                            }
+                                        });
+                                    }
                                 }
                             }
                             else {

@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 public class Maze extends AppCompatActivity {
@@ -47,6 +47,12 @@ public class Maze extends AppCompatActivity {
         ImageButton down = this.findViewById(R.id.arrow_down);
         ImageButton left = this.findViewById(R.id.arrow_left);
         ImageButton right = this.findViewById(R.id.arrow_right);
+        TextView win_maze=this.findViewById(R.id.win_maze);
+        up.setVisibility(View.VISIBLE);
+        down.setVisibility(View.VISIBLE);
+        left.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
+        win_maze.setVisibility(View.GONE);
 
         mApp=(App)this.getApplicationContext();
         thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThread();

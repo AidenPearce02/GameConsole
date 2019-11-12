@@ -214,13 +214,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void changeMaze(){
-            findViewById(R.id.arrow_left).setVisibility(View.GONE);
-            findViewById(R.id.arrow_right).setVisibility(View.GONE);
-            findViewById(R.id.arrow_up).setVisibility(View.GONE);
-            findViewById(R.id.arrow_down).setVisibility(View.GONE);
-            TextView win_maze = findViewById(R.id.win_maze);
+            mApp.findViewById(R.id.arrow_left).setVisibility(View.GONE);
+            mApp.findViewById(R.id.arrow_right).setVisibility(View.GONE);
+            mApp.findViewById(R.id.arrow_up).setVisibility(View.GONE);
+            mApp.findViewById(R.id.arrow_down).setVisibility(View.GONE);
+            TextView win_maze = mApp.findViewById(R.id.win_maze);
             win_maze.setText(String.valueOf(stopwatch.getElapsedTimeSecs()));
             win_maze.setVisibility(View.VISIBLE);
+        }
+
+        private void changeSnake(){
+            mApp.findViewById(R.id.arrow_left_snake).setVisibility(View.GONE);
+            mApp.findViewById(R.id.arrow_right_snake).setVisibility(View.GONE);
+            mApp.findViewById(R.id.arrow_up_snake).setVisibility(View.GONE);
+            mApp.findViewById(R.id.arrow_down_snake).setVisibility(View.GONE);
+            TextView win_snake = mApp.findViewById(R.id.win_snake);
+            win_snake.setText(message.substring(2));
+            win_snake.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -263,6 +273,24 @@ public class MainActivity extends AppCompatActivity {
                                         });
                                     }
                                 }
+                            }
+                            else if(message.charAt(0)=='s'){
+                                mApp.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(mApp.getClass().getSimpleName().equals("Snake")) {
+                                            changeSnake();
+                                            Handler handler = new Handler();
+                                            handler.postDelayed(new Runnable() {
+                                                public void run() {
+                                                    mApp.finish();
+                                                }
+                                            }, 5000);
+                                        }
+                                        stopwatch.pause();
+                                        ((App)getApplicationContext()).setStopwatch(null);
+                                    }
+                                });
                             }
                             else {
                                 mApp.runOnUiThread(new Runnable() {

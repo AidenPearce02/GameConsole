@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class Snake extends AppCompatActivity {
@@ -45,6 +46,12 @@ public class Snake extends AppCompatActivity {
         ImageButton down = this.findViewById(R.id.arrow_down_snake);
         ImageButton left = this.findViewById(R.id.arrow_left_snake);
         ImageButton right = this.findViewById(R.id.arrow_right_snake);
+        TextView win_snake = this.findViewById(R.id.win_snake);
+        up.setVisibility(View.VISIBLE);
+        down.setVisibility(View.VISIBLE);
+        left.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
+        win_snake.setVisibility(View.GONE);
 
         thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread();
         mApp=(App)this.getApplicationContext();

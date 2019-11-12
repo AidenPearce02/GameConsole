@@ -48,7 +48,7 @@ public class Games extends AppCompatActivity {
         Button snake = this.findViewById(R.id.snake);
         Button dj = this.findViewById(R.id.doodle_jump);
 
-        thread=(MainActivity.ThreadConnected)((App)getApplicationContext()).getThreadByName("bluetooth");
+        thread=(MainActivity.ThreadConnected)((App)getApplicationContext()).getThread();
         mApp=(App)this.getApplicationContext();
 
         maze.setOnClickListener(new View.OnClickListener() {

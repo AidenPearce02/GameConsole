@@ -12,6 +12,8 @@ import android.widget.Toast;
 public class Maze extends AppCompatActivity {
     private MainActivity.ThreadConnected thread;
     private App mApp;
+    private Stopwatch stopwatch;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -40,21 +42,25 @@ public class Maze extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
 
-        mApp=(App)this.getApplicationContext();
-        if(mApp!=null){
-            Toast.makeText(getApplicationContext(),"true",Toast.LENGTH_SHORT).show();
-        }
+
         ImageButton up = this.findViewById(R.id.arrow_up);
         ImageButton down = this.findViewById(R.id.arrow_down);
         ImageButton left = this.findViewById(R.id.arrow_left);
         ImageButton right = this.findViewById(R.id.arrow_right);
-        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThreadByName("bluetooth");
 
+        mApp=(App)this.getApplicationContext();
+        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThread();
+
+        stopwatch = new Stopwatch();
+        ((App)getApplicationContext()).setStopwatch(stopwatch);
         setResult(RESULT_OK);
-
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!stopwatch.isRunning()) {
+                    stopwatch.start();
+                    ((App)getApplicationContext()).setStopwatch(stopwatch);
+                }
                 if (thread!=null)
                 {
                     thread.write("u".getBytes());
@@ -65,6 +71,10 @@ public class Maze extends AppCompatActivity {
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!stopwatch.isRunning()) {
+                    stopwatch.start();
+                    ((App)getApplicationContext()).setStopwatch(stopwatch);
+                }
                 if (thread!=null)
                 {
                     thread.write("d".getBytes());
@@ -75,6 +85,10 @@ public class Maze extends AppCompatActivity {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!stopwatch.isRunning()) {
+                    stopwatch.start();
+                    ((App)getApplicationContext()).setStopwatch(stopwatch);
+                }
                 if (thread!=null)
                 {
                     thread.write("l".getBytes());
@@ -85,6 +99,10 @@ public class Maze extends AppCompatActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!stopwatch.isRunning()) {
+                    stopwatch.start();
+                    ((App)getApplicationContext()).setStopwatch(stopwatch);
+                }
                 if (thread!=null)
                 {
                     thread.write("r".getBytes());

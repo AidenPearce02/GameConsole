@@ -46,7 +46,7 @@ public class Snake extends AppCompatActivity {
         ImageButton left = this.findViewById(R.id.arrow_left_snake);
         ImageButton right = this.findViewById(R.id.arrow_right_snake);
 
-        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThreadByName("bluetooth");
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread();
         mApp=(App)this.getApplicationContext();
 
         setResult(RESULT_OK);

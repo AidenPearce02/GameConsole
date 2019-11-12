@@ -53,7 +53,7 @@ public class Levels extends AppCompatActivity {
         speed7 = this.findViewById(R.id.speed7);
         speed8 = this.findViewById(R.id.speed8);
 
-        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThreadByName("bluetooth");
+        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThread();
         mApp=(App)this.getApplicationContext();
 
         speed1.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +112,7 @@ public class Levels extends AppCompatActivity {
         {
             thread.write(text.getBytes());
         }
+        ((App)getApplicationContext()).setSpeedNow(button.getText().toString());
         Intent i = new Intent();
         i.putExtra(getResources().getString(R.string.speedNow), button.getText());
         setResult(RESULT_OK,i);

@@ -44,7 +44,7 @@ public class DoodleJump extends AppCompatActivity {
         ImageButton left = this.findViewById(R.id.arrow_left_dj);
         ImageButton right = this.findViewById(R.id.arrow_right_dj);
 
-        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThreadByName("bluetooth");
+        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThread();
 
         setResult(RESULT_OK);
 

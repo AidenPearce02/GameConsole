@@ -46,7 +46,7 @@ public class TypeOfMaze extends AppCompatActivity {
         Button withLight = findViewById(R.id.with_light);
         Button woLight = findViewById(R.id.wo_light);
 
-        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThreadByName("bluetooth");
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread();
         mApp=(App)this.getApplicationContext();
 
         setResult(RESULT_OK);

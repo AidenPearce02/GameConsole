@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -191,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         private StringBuilder sb = new StringBuilder();
         private String message;
         private Activity mApp;
+        private Stopwatch stopwatch;
         ThreadConnected(BluetoothSocket socket) {
             InputStream in = null;
             OutputStream out = null;
@@ -226,11 +226,25 @@ public class MainActivity extends AppCompatActivity {
                         while(((App)getApplicationContext()).getCurrentActivity()==null) Thread.sleep(10);
                         if(((App)getApplicationContext()).getCurrentActivity()!=null) {
                             mApp = ((App) getApplicationContext()).getCurrentActivity();
-                            mApp.runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(mApp, message, Toast.LENGTH_LONG).show();
+                            if(message.charAt(0)=='m'){
+                                stopwatch =((App)getApplicationContext()).getStopwatch();
+                                if(stopwatch.isRunning()){
+                                    mApp.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(mApp, String.valueOf(stopwatch.getElapsedTimeSecs()), Toast.LENGTH_SHORT).show();
+                                            stopwatch.pause();
+                                        }
+                                    });
                                 }
-                            });
+                            }
+                            else {
+                                mApp.runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(mApp, message, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
                         }
                     }
                 } catch (IOException e) {

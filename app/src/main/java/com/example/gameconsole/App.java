@@ -2,10 +2,37 @@ package com.example.gameconsole;
 
 import android.app.Activity;
 import android.app.Application;
-import android.widget.Toast;
 
 public class App extends Application {
     private Activity mCurrentActivity = null;
+    private String speedNow;
+    private String mazeNow;
+    private Stopwatch stopwatch;
+
+    public Stopwatch getStopwatch() {
+        return stopwatch;
+    }
+
+    public void setStopwatch(Stopwatch stopwatch) {
+        this.stopwatch = stopwatch;
+    }
+
+    public String getSpeedNow() {
+        return speedNow;
+    }
+
+    public void setSpeedNow(String speedNow) {
+        this.speedNow = speedNow;
+    }
+
+    public String getMazeNow() {
+        return mazeNow;
+    }
+
+    public void setMazeNow(String mazeNow) {
+        this.mazeNow = mazeNow;
+    }
+
     public Activity getCurrentActivity(){
         return mCurrentActivity;
     }
@@ -13,23 +40,11 @@ public class App extends Application {
         this.mCurrentActivity = mCurrentActivity;
     }
 
-    /*private ThreadConnected threadConnected;
-    public ThreadConnected getThreadConnected() {
-        return threadConnected;
-    }
-    public void setThreadConnected(ThreadConnected threadConnected) {
-        this.threadConnected = threadConnected;
-    }*/
-    public Thread getThreadByName(String threadName) {
+    public Thread getThread() {
+        String threadName="bluetooth";
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;
         }
         return null;
-    }
-
-
-    public void msg(String s)
-    {
-        Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
     }
 }

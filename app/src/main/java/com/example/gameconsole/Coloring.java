@@ -75,7 +75,7 @@ public class Coloring extends AppCompatActivity {
         paintBucket = this.findViewById(R.id.paintBucket);
         clearBucket = this.findViewById(R.id.clearBucket);
 
-        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThreadByName("bluetooth");
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread();
         GradientDrawable gradientDrawable = (GradientDrawable)colorPicker.getBackground();
         gradientDrawable.setColor(Color.BLACK);
         setResult(RESULT_OK);

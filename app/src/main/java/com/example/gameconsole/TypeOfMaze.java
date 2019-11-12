@@ -3,16 +3,41 @@ package com.example.gameconsole;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.IOException;
 
 public class TypeOfMaze extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,23 +45,18 @@ public class TypeOfMaze extends AppCompatActivity {
 
         Button withLight = findViewById(R.id.with_light);
         Button woLight = findViewById(R.id.wo_light);
-        btSocket = ((App) getApplication()).getBtSocket();
+
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThreadByName("bluetooth");
+        mApp=(App)this.getApplicationContext();
 
         setResult(RESULT_OK);
         withLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(TypeOfMaze.this, Maze.class),150);
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("n".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("n".getBytes());
                 }
             }
         });
@@ -45,16 +65,9 @@ public class TypeOfMaze extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(TypeOfMaze.this, Maze.class),150);
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("l".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("l".getBytes());
                 }
             }
         });
@@ -66,12 +79,8 @@ public class TypeOfMaze extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==150&&resultCode==RESULT_OK) {
             finish();
-            if(btSocket!=null) {
-                try {
-                    btSocket.getOutputStream().write("b".getBytes());
-                } catch (IOException e) {
-                    ((App) getApplication()).msg("Error");
-                }
+            if(thread!=null) {
+                thread.write("b".getBytes());
             }
         }
     }

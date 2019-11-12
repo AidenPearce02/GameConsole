@@ -3,18 +3,42 @@ package com.example.gameconsole;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.IOException;
-
 public class SnakeMenu extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
     private TextView speedNow,mazeNow;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -25,7 +49,9 @@ public class SnakeMenu extends AppCompatActivity {
         Button speed=this.findViewById(R.id.level);
         speedNow=this.findViewById(R.id.speedNow);
         mazeNow=this.findViewById(R.id.mazeNow);
-        btSocket=((App)getApplication()).getBtSocket();
+
+        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThreadByName("bluetooth");
+        mApp=(App)this.getApplicationContext();
 
         game.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,13 +82,8 @@ public class SnakeMenu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==145&&resultCode==RESULT_OK) {
             finish();
-            if(btSocket!=null) {
-                try {
-                    btSocket.getOutputStream().write("b".getBytes());
-
-                } catch (IOException e) {
-                    ((App) getApplication()).msg("Error");
-                }
+            if(thread!=null) {
+                thread.write("b".getBytes());
             }
         }
         else if(requestCode==150&&resultCode==RESULT_OK){
@@ -74,16 +95,9 @@ public class SnakeMenu extends AppCompatActivity {
     }
 
     void choice(String choiceS){
-        if (btSocket!=null)
+        if (thread!=null)
         {
-            try
-            {
-                btSocket.getOutputStream().write(choiceS.getBytes());
-            }
-            catch (IOException e)
-            {
-                ((App)getApplication()).msg("Error");
-            }
+            thread.write(choiceS.getBytes());
         }
     }
 }

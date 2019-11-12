@@ -2,7 +2,7 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -18,36 +18,64 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Coloring extends AppCompatActivity {
+    private App mApp;
     private boolean isPaint=true;
 
-    private BluetoothSocket btSocket;
     private TextView colorPicker;
     private int lastColor=Color.BLACK;
 
     private boolean populatedCells;
     protected Map<View, Rect> cells = new HashMap<>();
 
+    private MainActivity.ThreadConnected thread;
+
     ImageButton brush,eraser,paintBucket,clearBucket;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coloring);
 
+        mApp=(App)this.getApplicationContext();
         TableLayout table = this.findViewById(R.id.square);
+
         colorPicker = this.findViewById(R.id.colorPicker);
         brush = this.findViewById(R.id.brush);
         eraser = this.findViewById(R.id.eraser);
         paintBucket = this.findViewById(R.id.paintBucket);
         clearBucket = this.findViewById(R.id.clearBucket);
-        btSocket = ((App) getApplication()).getBtSocket();
+
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThreadByName("bluetooth");
         GradientDrawable gradientDrawable = (GradientDrawable)colorPicker.getBackground();
         gradientDrawable.setColor(Color.BLACK);
         setResult(RESULT_OK);
@@ -106,7 +134,7 @@ public class Coloring extends AppCompatActivity {
         table.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN || motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     final int x = (int) motionEvent.getRawX();
                     final int y = (int) motionEvent.getRawY();
                     for (final Map.Entry<View, Rect> entry : cells.entrySet()) {
@@ -181,17 +209,10 @@ public class Coloring extends AppCompatActivity {
         }
         String Hex=Integer.toHexString(color);
         String total="$#"+Hex.substring(2)+" "+idCell+";";
-        if (btSocket!=null)
+        if (thread!=null)
         {
-            try
-            {
-                btSocket.getOutputStream().write("c".getBytes());
-                btSocket.getOutputStream().write(total.getBytes());
-            }
-            catch (IOException e)
-            {
-                ((App)getApplication()).msg("Error");
-            }
+            thread.write("c".getBytes());
+            thread.write(total.getBytes());
         }
     }
 
@@ -211,17 +232,10 @@ public class Coloring extends AppCompatActivity {
         int color=(bucket)?lastColor:Color.BLACK;
         String Hex=Integer.toHexString(color);
         String total="$#"+Hex.substring(2)+";";
-        if (btSocket!=null)
+        if (thread!=null)
         {
-            try
-            {
-                btSocket.getOutputStream().write("B".getBytes());
-                btSocket.getOutputStream().write(total.getBytes());
-            }
-            catch (IOException e)
-            {
-                ((App)getApplication()).msg("Error");
-            }
+            thread.write("B".getBytes());
+            thread.write(total.getBytes());
         }
     }
 

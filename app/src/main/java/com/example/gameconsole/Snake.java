@@ -2,15 +2,40 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import java.io.IOException;
 
 public class Snake extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,23 +45,18 @@ public class Snake extends AppCompatActivity {
         ImageButton down = this.findViewById(R.id.arrow_down_snake);
         ImageButton left = this.findViewById(R.id.arrow_left_snake);
         ImageButton right = this.findViewById(R.id.arrow_right_snake);
-        btSocket = ((App) getApplication()).getBtSocket();
+
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThreadByName("bluetooth");
+        mApp=(App)this.getApplicationContext();
 
         setResult(RESULT_OK);
 
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("u".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("u".getBytes());
                 }
             }
         });
@@ -44,16 +64,9 @@ public class Snake extends AppCompatActivity {
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("d".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("d".getBytes());
                 }
             }
         });
@@ -61,16 +74,9 @@ public class Snake extends AppCompatActivity {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("l".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("l".getBytes());
                 }
             }
         });
@@ -78,16 +84,9 @@ public class Snake extends AppCompatActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("r".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("r".getBytes());
                 }
             }
         });

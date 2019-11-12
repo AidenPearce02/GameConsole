@@ -2,41 +2,62 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import java.io.IOException;
 
 public class Maze extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private MainActivity.ThreadConnected thread;
+    private App mApp;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maze);
 
+        mApp=(App)this.getApplicationContext();
+        if(mApp!=null){
+            Toast.makeText(getApplicationContext(),"true",Toast.LENGTH_SHORT).show();
+        }
         ImageButton up = this.findViewById(R.id.arrow_up);
         ImageButton down = this.findViewById(R.id.arrow_down);
         ImageButton left = this.findViewById(R.id.arrow_left);
         ImageButton right = this.findViewById(R.id.arrow_right);
-        btSocket = ((App) getApplication()).getBtSocket();
+        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThreadByName("bluetooth");
 
         setResult(RESULT_OK);
 
         up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("u".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("u".getBytes());
                 }
             }
         });
@@ -44,16 +65,9 @@ public class Maze extends AppCompatActivity {
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("d".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("d".getBytes());
                 }
             }
         });
@@ -61,16 +75,9 @@ public class Maze extends AppCompatActivity {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("l".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("l".getBytes());
                 }
             }
         });
@@ -78,16 +85,9 @@ public class Maze extends AppCompatActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("r".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("r".getBytes());
                 }
             }
         });

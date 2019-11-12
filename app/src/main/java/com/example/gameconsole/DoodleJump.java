@@ -2,37 +2,57 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import java.io.IOException;
-
 public class DoodleJump extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doodle_jump);
+
+        mApp=(App)this.getApplicationContext();
         ImageButton left = this.findViewById(R.id.arrow_left_dj);
         ImageButton right = this.findViewById(R.id.arrow_right_dj);
-        btSocket = ((App) getApplication()).getBtSocket();
+
+        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThreadByName("bluetooth");
+
         setResult(RESULT_OK);
 
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
-                {
-                    try
-                    {
-                        btSocket.getOutputStream().write("l".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                if(thread!=null){
+                    thread.write("l".getBytes());
                 }
             }
         });
@@ -40,16 +60,9 @@ public class DoodleJump extends AppCompatActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btSocket!=null)
+                if (thread!=null)
                 {
-                    try
-                    {
-                        btSocket.getOutputStream().write("r".getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        ((App)getApplication()).msg("Error");
-                    }
+                    thread.write("r".getBytes());
                 }
             }
         });

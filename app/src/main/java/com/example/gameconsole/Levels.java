@@ -2,18 +2,43 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.IOException;
 
 public class Levels extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
     private Button speed1,speed2,speed3,speed4,speed5,speed6,speed7,speed8;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,70 +52,65 @@ public class Levels extends AppCompatActivity {
         speed6 = this.findViewById(R.id.speed6);
         speed7 = this.findViewById(R.id.speed7);
         speed8 = this.findViewById(R.id.speed8);
-        btSocket=((App)getApplication()).getBtSocket();
+
+        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThreadByName("bluetooth");
+        mApp=(App)this.getApplicationContext();
 
         speed1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(1,speed1);
+                msg("1",speed1);
             }
         });
         speed2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(2,speed2);
+                msg("2",speed2);
             }
         });
         speed3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(3,speed3);
+                msg("3",speed3);
             }
         });
         speed4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(4,speed4);
+                msg("4",speed4);
             }
         });
         speed5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(5,speed5);
+                msg("5",speed5);
             }
         });
         speed6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(6,speed6);
+                msg("6",speed6);
             }
         });
         speed7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(7,speed7);
+                msg("7",speed7);
             }
         });
         speed8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(8,speed8);
+                msg("8",speed8);
             }
         });
     }
 
-    void msg(int text, Button button){
+    void msg(String text, Button button){
         Toast.makeText(getApplicationContext(),button.getText(),Toast.LENGTH_SHORT).show();
-        if (btSocket!=null)
+        if (thread!=null)
         {
-            try
-            {
-                btSocket.getOutputStream().write(text);
-            }
-            catch (IOException e)
-            {
-                ((App)getApplication()).msg("Error");
-            }
+            thread.write(text.getBytes());
         }
         Intent i = new Intent();
         i.putExtra(getResources().getString(R.string.speedNow), button.getText());

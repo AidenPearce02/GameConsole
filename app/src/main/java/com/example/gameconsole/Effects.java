@@ -2,17 +2,41 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 public class Effects extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
     private Button effect1,effect2,effect3,effect4,effect5;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +47,9 @@ public class Effects extends AppCompatActivity {
         effect3=this.findViewById(R.id.effect3);
         effect4=this.findViewById(R.id.effect4);
         effect5=this.findViewById(R.id.effect5);
-        btSocket = ((App)getApplication()).getBtSocket();
+
+        thread = (MainActivity.ThreadConnected)((App)getApplicationContext()).getThreadByName("bluetooth");
+        mApp=(App)this.getApplicationContext();
 
         effect1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,16 +85,9 @@ public class Effects extends AppCompatActivity {
 
     void msg(String text,Button button){
         Toast.makeText(getApplicationContext(),"Playing effect: "+button.getText(),Toast.LENGTH_SHORT).show();
-        if (btSocket!=null)
+        if (thread!=null)
         {
-            try
-            {
-                btSocket.getOutputStream().write(text.getBytes());
-            }
-            catch (IOException e)
-            {
-                ((App)getApplication()).msg("Error");
-            }
+            thread.write(text.getBytes());
         }
     }
 }

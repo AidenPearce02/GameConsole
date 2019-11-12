@@ -2,18 +2,42 @@ package com.example.gameconsole;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 public class TypeOfSnakeMaze extends AppCompatActivity {
-    private BluetoothSocket btSocket;
+    private App mApp;
+    private MainActivity.ThreadConnected thread;
     private Button level0,level1,level2,level3,level4,level5;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApp.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearReferences();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mApp.setCurrentActivity(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,58 +49,53 @@ public class TypeOfSnakeMaze extends AppCompatActivity {
         level3=this.findViewById(R.id.level3);
         level4=this.findViewById(R.id.level4);
         level5=this.findViewById(R.id.level5);
-        btSocket=((App)getApplication()).getBtSocket();
+
+        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThreadByName("bluetooth");
+        mApp=(App)this.getApplicationContext();
 
         level0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(0,level0);
+                msg("0",level0);
             }
         });
         level1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(1,level1);
+                msg("1",level1);
             }
         });
         level2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(2,level2);
+                msg("2",level2);
             }
         });
         level3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(3,level3);
+                msg("3",level3);
             }
         });
         level4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(4,level4);
+                msg("4",level4);
             }
         });
         level5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg(5,level5);
+                msg("5",level5);
             }
         });
     }
 
-    void msg(int text,Button button){
+    void msg(String text,Button button){
         Toast.makeText(getApplicationContext(),button.getText(),Toast.LENGTH_SHORT).show();
-        if (btSocket!=null)
+        if (thread!=null)
         {
-            try
-            {
-                btSocket.getOutputStream().write(text);
-            }
-            catch (IOException e)
-            {
-                ((App)getApplication()).msg("Error");
-            }
+            thread.write(text.getBytes());
         }
         Intent i = new Intent();
         i.putExtra(getResources().getString(R.string.mazeNow), button.getText());

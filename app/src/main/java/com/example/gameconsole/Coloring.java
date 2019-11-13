@@ -37,6 +37,14 @@ public class Coloring extends AppCompatActivity {
 
     ImageButton brush,eraser,paintBucket,clearBucket;
 
+    public boolean isPaint() {
+        return isPaint;
+    }
+
+    public int getLastColor() {
+        return lastColor;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -75,7 +83,7 @@ public class Coloring extends AppCompatActivity {
         paintBucket = this.findViewById(R.id.paintBucket);
         clearBucket = this.findViewById(R.id.clearBucket);
 
-        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread();
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread("bluetooth");
         GradientDrawable gradientDrawable = (GradientDrawable)colorPicker.getBackground();
         gradientDrawable.setColor(Color.BLACK);
         setResult(RESULT_OK);
@@ -190,7 +198,7 @@ public class Coloring extends AppCompatActivity {
 
 
     void changeColor(View view){
-        GradientDrawable gradientDrawable = (GradientDrawable)view.getBackground();
+
         String idCell="";
         int cell=view.getId();
         int y=15-cell/16,x=cell%16;
@@ -198,15 +206,7 @@ public class Coloring extends AppCompatActivity {
         if(y%2==0) id=y*16+15-x;
         else id=y*16+x;
         idCell+=255-id;
-        int color;
-        if(isPaint) {
-            gradientDrawable.setColor(lastColor);
-            color=lastColor;
-        }
-        else {
-            gradientDrawable.setColor(getResources().getColor(R.color.colorText, null));
-            color=Color.BLACK;
-        }
+        int color=(isPaint)?lastColor:Color.BLACK;
         String Hex=Integer.toHexString(color);
         String total="$#"+Hex.substring(2)+" "+idCell+";";
         if (thread!=null)
@@ -217,18 +217,6 @@ public class Coloring extends AppCompatActivity {
     }
 
     void changeColorAll(boolean bucket){
-        for (final Map.Entry<View, Rect> entry : cells.entrySet()) {
-            final View viewTemp = entry.getKey();
-            GradientDrawable gradientDrawable = (GradientDrawable)viewTemp.getBackground();
-
-            if(bucket) {
-                gradientDrawable.setColor(lastColor);
-            }
-            else {
-                gradientDrawable.setColor(getResources().getColor(R.color.colorText,null));
-            }
-
-        }
         int color=(bucket)?lastColor:Color.BLACK;
         String Hex=Integer.toHexString(color);
         String total="$#"+Hex.substring(2)+";";

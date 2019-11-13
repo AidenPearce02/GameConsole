@@ -55,10 +55,13 @@ public class Maze extends AppCompatActivity {
         win_maze.setVisibility(View.GONE);
 
         mApp=(App)this.getApplicationContext();
-        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThread();
+        thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThread("bluetooth");
 
-        stopwatch = new Stopwatch();
-        ((App)getApplicationContext()).setStopwatch(stopwatch);
+        if(((App) getApplicationContext()).getStopwatch()==null) {
+            stopwatch = new Stopwatch();
+            ((App)getApplicationContext()).setStopwatch(stopwatch);
+        }
+        else stopwatch = ((App) getApplicationContext()).getStopwatch();
         setResult(RESULT_OK);
         up.setOnClickListener(new View.OnClickListener() {
             @Override

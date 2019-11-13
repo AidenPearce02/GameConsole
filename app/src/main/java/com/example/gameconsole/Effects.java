@@ -48,7 +48,7 @@ public class Effects extends AppCompatActivity {
         effect4=this.findViewById(R.id.effect4);
         effect5=this.findViewById(R.id.effect5);
 
-        thread = (MainActivity.ThreadConnected)((App)getApplicationContext()).getThread();
+        thread = (MainActivity.ThreadConnected)((App)getApplicationContext()).getThread("bluetooth");
         mApp=(App)this.getApplicationContext();
 
         effect1.setOnClickListener(new View.OnClickListener() {

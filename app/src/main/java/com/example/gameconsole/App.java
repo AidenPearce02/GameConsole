@@ -40,8 +40,7 @@ public class App extends Application {
         this.mCurrentActivity = mCurrentActivity;
     }
 
-    public Thread getThread() {
-        String threadName="bluetooth";
+    public Thread getThread(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;
         }

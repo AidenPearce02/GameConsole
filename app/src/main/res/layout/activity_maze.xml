@@ -91,7 +91,7 @@
         android:id="@+id/win_maze"
         android:layout_width="245dp"
         android:layout_height="245dp"
-        android:textSize="30sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="@color/colorText"

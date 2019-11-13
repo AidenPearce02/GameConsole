@@ -5,12 +5,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -219,7 +219,8 @@ public class MainActivity extends AppCompatActivity {
             mApp.findViewById(R.id.arrow_up).setVisibility(View.GONE);
             mApp.findViewById(R.id.arrow_down).setVisibility(View.GONE);
             TextView win_maze = mApp.findViewById(R.id.win_maze);
-            win_maze.setText(String.valueOf(stopwatch.getElapsedTimeSecs()));
+            String text="Time: "+stopwatch.getElapsedTimeSecs()+"s";
+            win_maze.setText(text);
             win_maze.setVisibility(View.VISIBLE);
         }
 
@@ -229,8 +230,33 @@ public class MainActivity extends AppCompatActivity {
             mApp.findViewById(R.id.arrow_up_snake).setVisibility(View.GONE);
             mApp.findViewById(R.id.arrow_down_snake).setVisibility(View.GONE);
             TextView win_snake = mApp.findViewById(R.id.win_snake);
-            win_snake.setText(message.substring(2));
+            String text="Score: "+message.substring(2,message.length()-1);
+            win_snake.setText(text);
             win_snake.setVisibility(View.VISIBLE);
+        }
+
+        private void changeColoring(){
+            String []parts=message.substring(2).split(" ");
+            int temp = Integer.valueOf(parts[1]);
+            int r = temp / 65536;
+            int g = (temp - r * 65536) / 256;
+            int b = temp - r * 65536 - g * 256;
+            int color = Color.rgb(r, g, b);
+            if(parts[0].charAt(0)=='B'){
+                for(int i=0;i<256;i++){
+                    GradientDrawable gradientDrawable = (GradientDrawable) mApp.findViewById(i).getBackground();
+                    gradientDrawable.setColor(color);
+                }
+            }
+            else {
+                int viewId = Integer.valueOf(parts[0]);
+                int y = viewId / 16, x = viewId % 16;
+                int id;
+                if (y % 2 == 0) id = y * 16 + 15 - x;
+                else id = y * 16 + x;
+                GradientDrawable gradientDrawable = (GradientDrawable) mApp.findViewById(id).getBackground();
+                gradientDrawable.setColor(color);
+            }
         }
 
         @Override
@@ -250,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         while(((App)getApplicationContext()).getCurrentActivity()==null) Thread.sleep(10);
                         if(((App)getApplicationContext()).getCurrentActivity()!=null) {
                             mApp = ((App) getApplicationContext()).getCurrentActivity();
+
                             if(message.charAt(0)=='m'){
                                 if(((App)getApplicationContext()).getStopwatch()!=null){
                                     stopwatch =((App)getApplicationContext()).getStopwatch();
@@ -265,7 +292,6 @@ public class MainActivity extends AppCompatActivity {
                                                             mApp.finish();
                                                         }
                                                     }, 5000);
-                                                    //5 seconds
                                                 }
                                                 stopwatch.pause();
                                                 ((App)getApplicationContext()).setStopwatch(null);
@@ -285,14 +311,22 @@ public class MainActivity extends AppCompatActivity {
                                                 public void run() {
                                                     mApp.finish();
                                                 }
-                                            }, 5000);
+                                            }, 3000);
                                         }
-                                        stopwatch.pause();
-                                        ((App)getApplicationContext()).setStopwatch(null);
                                     }
                                 });
                             }
-                            else {
+                            else if(message.charAt(0)=='c'){
+                                mApp.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mApp.getClass().getSimpleName().equals("Coloring")) {
+                                            changeColoring();
+                                        }
+                                    }
+                                });
+                            }
+                            else{
                                 mApp.runOnUiThread(new Runnable() {
                                     public void run() {
                                         Toast.makeText(mApp, message, Toast.LENGTH_LONG).show();

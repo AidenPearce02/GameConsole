@@ -50,7 +50,7 @@ public class SnakeMenu extends AppCompatActivity {
         speedNow=this.findViewById(R.id.speedNow);
         mazeNow=this.findViewById(R.id.mazeNow);
 
-        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThread();
+        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThread("bluetooth");
         mApp=(App)this.getApplicationContext();
 
         if(!((App) getApplicationContext()).getSpeedNow().equals(""))speedNow.setText(((App)getApplicationContext()).getSpeedNow());

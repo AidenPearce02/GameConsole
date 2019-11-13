@@ -53,7 +53,7 @@ public class Snake extends AppCompatActivity {
         right.setVisibility(View.VISIBLE);
         win_snake.setVisibility(View.GONE);
 
-        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread();
+        thread = (MainActivity.ThreadConnected)((App) getApplication()).getThread("bluetooth");
         mApp=(App)this.getApplicationContext();
 
         setResult(RESULT_OK);

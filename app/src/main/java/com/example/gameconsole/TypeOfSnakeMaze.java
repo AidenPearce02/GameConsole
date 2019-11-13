@@ -50,7 +50,7 @@ public class TypeOfSnakeMaze extends AppCompatActivity {
         level4=this.findViewById(R.id.level4);
         level5=this.findViewById(R.id.level5);
 
-        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThread();
+        thread=(MainActivity.ThreadConnected)((App)getApplication()).getThread("bluetooth");
         mApp=(App)this.getApplicationContext();
 
         level0.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +92,6 @@ public class TypeOfSnakeMaze extends AppCompatActivity {
     }
 
     void msg(String text,Button button){
-        Toast.makeText(getApplicationContext(),button.getText(),Toast.LENGTH_SHORT).show();
         if (thread!=null)
         {
             thread.write(text.getBytes());

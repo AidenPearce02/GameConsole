@@ -4,6 +4,14 @@ class Stopwatch {
     private long startTime = 0;
     private boolean running = false;
 
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
     boolean isRunning(){
         return running;
     }

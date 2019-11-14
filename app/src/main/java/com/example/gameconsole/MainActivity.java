@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
             mApp.findViewById(R.id.arrow_up).setVisibility(View.GONE);
             mApp.findViewById(R.id.arrow_down).setVisibility(View.GONE);
             TextView win_maze = mApp.findViewById(R.id.win_maze);
+            stopwatch.setStartTime(stopwatch.getStartTime()-1500);
             String text="Time: "+stopwatch.getElapsedTimeSecs()+"s";
             win_maze.setText(text);
             win_maze.setVisibility(View.VISIBLE);
@@ -233,6 +234,14 @@ public class MainActivity extends AppCompatActivity {
             String text="Score: "+message.substring(2,message.length()-1);
             win_snake.setText(text);
             win_snake.setVisibility(View.VISIBLE);
+        }
+
+        private void changeDj(){
+            mApp.findViewById(R.id.arrow_up_dj).setVisibility(View.GONE);
+            TextView win_dj = mApp.findViewById(R.id.win_dj);
+            String text="Score: "+message.substring(2,message.length()-1);
+            win_dj.setText(text);
+            win_dj.setVisibility(View.VISIBLE);
         }
 
         private void changeColoring(){
@@ -291,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
                                                         public void run() {
                                                             mApp.finish();
                                                         }
-                                                    }, 5000);
+                                                    }, 2000);
                                                 }
                                                 stopwatch.pause();
                                                 ((App)getApplicationContext()).setStopwatch(null);
@@ -311,7 +320,23 @@ public class MainActivity extends AppCompatActivity {
                                                 public void run() {
                                                     mApp.finish();
                                                 }
-                                            }, 3000);
+                                            }, 2000);
+                                        }
+                                    }
+                                });
+                            }
+                            else if(message.charAt(0)=='j'){
+                                mApp.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(mApp.getClass().getSimpleName().equals("DoodleJump")) {
+                                            changeDj();
+                                            Handler handler = new Handler();
+                                            handler.postDelayed(new Runnable() {
+                                                public void run() {
+                                                    mApp.finish();
+                                                }
+                                            }, 2000);
                                         }
                                     }
                                 });

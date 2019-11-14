@@ -27,37 +27,24 @@
         app:layout_constraintVertical_bias="0.04"/>
 
     <ImageButton
-        android:id="@+id/arrow_left_dj"
+        android:id="@+id/arrow_up_dj"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:background="@color/colorPrimary"
-        android:rotation="-90"
-        android:src="@drawable/up_arrow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"/>
-
-    <ImageButton
-        android:id="@+id/arrow_right_dj"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@color/colorPrimary"
-        android:rotation="90"
         android:src="@drawable/up_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/center"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@color/colorPrimary"
-        android:rotation="90"
+    <TextView
+        android:id="@+id/win_dj"
+        android:layout_width="245dp"
+        android:layout_height="245dp"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

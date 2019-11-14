@@ -10,7 +10,7 @@
     <string name="maze">Maze</string>
     <string name="coloring">Coloring</string>
     <string name="snake">Snake</string>
-    <string name="doodle_jump">Doodle Jump</string>
+    <string name="doodle_jump">Little Bouncer</string>
     <string name="about">About</string>
     <string name="connection_fail">Connection Failed. Is it a SPP Bluetooth? Try again.</string>
     <string name="Vitalli">Android/Arduino Developer\nVitalii Nikolaienko</string>

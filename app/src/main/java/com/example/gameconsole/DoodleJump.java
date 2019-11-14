@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class DoodleJump extends AppCompatActivity {
     private App mApp;
@@ -41,28 +42,19 @@ public class DoodleJump extends AppCompatActivity {
         setContentView(R.layout.activity_doodle_jump);
 
         mApp=(App)this.getApplicationContext();
-        ImageButton left = this.findViewById(R.id.arrow_left_dj);
-        ImageButton right = this.findViewById(R.id.arrow_right_dj);
-
+        ImageButton up = this.findViewById(R.id.arrow_up_dj);
+        TextView dj_win=this.findViewById(R.id.win_dj);
+        up.setVisibility(View.VISIBLE);
+        dj_win.setVisibility(View.GONE);
         thread = (MainActivity.ThreadConnected)((App) getApplicationContext()).getThread("bluetooth");
 
         setResult(RESULT_OK);
 
-        left.setOnClickListener(new View.OnClickListener() {
+        up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(thread!=null){
-                    thread.write("l".getBytes());
-                }
-            }
-        });
-
-        right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (thread!=null)
-                {
-                    thread.write("r".getBytes());
+                    thread.write("w".getBytes());
                 }
             }
         });
